@@ -34,10 +34,6 @@ import org.eclipse.sirius.web.api.configuration.IStereotypeDescriptionRegistryCo
 import org.eclipse.sirius.web.api.configuration.StereotypeDescription;
 import org.eclipse.sirius.web.emf.services.SiriusWebJSONResourceFactoryImpl;
 import org.eclipse.sirius.web.emf.utils.EMFResourceUtils;
-import org.obeonetwork.dsl.bpmn2.Bpmn2Factory;
-import org.obeonetwork.dsl.bpmn2.Lane;
-import org.obeonetwork.dsl.bpmn2.LaneSet;
-import org.obeonetwork.dsl.bpmn2.Process;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
@@ -86,7 +82,7 @@ public class StereotypeDescriptionRegistryConfigurer implements IStereotypeDescr
     }
 
     private String getEmptyFlowContent() {
-        return this.getEmptyContent(FlowFactory.eINSTANCE.createSystem());
+        return this.getContent(FlowFactory.eINSTANCE.createSystem());
     }
 
     private String getRobotFlowContent() {
@@ -97,22 +93,7 @@ public class StereotypeDescriptionRegistryConfigurer implements IStereotypeDescr
         return this.getContent(new ClassPathResource("Big_Guy.flow")); //$NON-NLS-1$
     }
 
-    private String getEmptyBPMNContent() {
-        Process process = Bpmn2Factory.eINSTANCE.createProcess();
-        LaneSet laneSet = Bpmn2Factory.eINSTANCE.createLaneSet();
-        laneSet.setName("Lane set"); //$NON-NLS-1$
-        process.getLaneSets().add(laneSet);
-        Lane lane = Bpmn2Factory.eINSTANCE.createLane();
-        lane.setName("Lane"); //$NON-NLS-1$
-        laneSet.getLanes().add(lane);
-        return this.getEmptyContent(process);
-    }
-
-    private String getNobelBPMNContent() {
-        return this.getContent(new ClassPathResource("definitions.bpmn")); //$NON-NLS-1$
-    }
-
-    private String getEmptyContent(EObject rootEObject) {
+    private String getContent(EObject rootEObject) {
         JsonResource resource = new SiriusWebJSONResourceFactoryImpl().createResource(URI.createURI("inmemory")); //$NON-NLS-1$
         resource.getContents().add(rootEObject);
 
