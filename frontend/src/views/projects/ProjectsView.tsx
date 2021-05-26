@@ -210,7 +210,7 @@ export const ProjectsView = () => {
                         component={RouterLink}
                         data-testid="create"
                         color="primary"
-                        variant="contained">
+                        variant="outlined">
                         Upload
                       </Button>
                     </div>

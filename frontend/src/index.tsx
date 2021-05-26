@@ -39,6 +39,7 @@ const baseTheme = createMuiTheme({
       light: '#514B79'
     },
     text: {
+      primary: '#261E58',
       disabled: '#B3BFC5',
       hint: '#B3BFC5'
     },
@@ -65,11 +66,6 @@ const baseTheme = createMuiTheme({
 
 const siriusWebTheme = createMuiTheme(
   {
-    palette: {
-      text: {
-        primary: baseTheme.palette.secondary.main
-      }
-    },
     overrides: {
       MuiAvatar: {
         colorDefault: {

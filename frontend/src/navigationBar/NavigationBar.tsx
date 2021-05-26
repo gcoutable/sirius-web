@@ -10,17 +10,26 @@
  * Contributors:
  *     Obeo - initial API and implementation
  *******************************************************************************/
-import { Link } from '@material-ui/core';
+import { Link, IconButton } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, emphasize } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import { SiriusIcon } from '@eclipse-sirius/sirius-components';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Help } from 'help/help';
+import { NavigationBarProps } from './NavigationBar.types';
 
 const useNavigationbarStyles = makeStyles(theme => ({
+  navbar: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  appBarHeader: {
+    height: '4px',
+    backgroundColor: theme.palette.primary.main
+  },
   toolbar: {
     display: 'flex',
     flexDirection: 'row',
@@ -41,25 +50,36 @@ const useNavigationbarStyles = makeStyles(theme => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end'
+  },
+  onDarkBackground: {
+    '&:hover': {
+      backgroundColor: emphasize(theme.palette.secondary.main, 0.08)
+    }
   }
 }));
 
-export const NavigationBar = () => {
+export const NavigationBar = ({ children }: NavigationBarProps) => {
   const classes = useNavigationbarStyles();
   return (
-    <AppBar position="static">
-      <Toolbar className={classes.toolbar}>
-        <div className={classes.left}>
-          <Tooltip title="Back to the homepage">
-            <Link component={RouterLink} to="/" className={classes.link} color="inherit">
-              <SiriusIcon fontSize="large" />
-            </Link>
-          </Tooltip>
-        </div>
-        <div className={classes.right}>
-          <Help />
-        </div>
-      </Toolbar>
-    </AppBar>
+    <div className={classes.navbar}>
+      <div className={classes.appBarHeader}></div>
+      <AppBar position="static">
+        <Toolbar className={classes.toolbar} variant="dense">
+          <div className={classes.left}>
+            <Tooltip title="Back to the homepage">
+              <Link component={RouterLink} to="/" className={classes.link} color="inherit">
+                <IconButton className={classes.onDarkBackground} color="inherit">
+                  <SiriusIcon fontSize="large" />
+                </IconButton>
+              </Link>
+            </Tooltip>
+          </div>
+          {children}
+          <div className={classes.right}>
+            <Help />
+          </div>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 };

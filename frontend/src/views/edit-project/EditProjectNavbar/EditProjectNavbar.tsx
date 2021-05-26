@@ -15,11 +15,10 @@ import {
   NewDocumentModal,
   RenameProjectModal,
   UploadDocumentModal,
-  SiriusIcon,
   ServerContext
 } from '@eclipse-sirius/sirius-components';
 import React, { useContext, useReducer } from 'react';
-import { Link } from '@material-ui/core';
+import { emphasize } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import { EditProjectNavbarProps } from 'views/edit-project/EditProjectNavbar/EditProjectNavbar.types';
 import {
@@ -33,43 +32,16 @@ import {
   REDIRECT__STATE
 } from './machine';
 import { initialState, reducer } from './reducer';
-import { Help } from 'help/help';
-import { Link as RouterLink } from 'react-router-dom';
-import {
-  AppBar,
-  makeStyles,
-  Toolbar,
-  Tooltip,
-  Typography,
-  IconButton,
-  Menu,
-  MenuItem,
-  ListItemIcon,
-  ListItemText
-} from '@material-ui/core';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import { makeStyles, Typography, IconButton, Menu, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import PublishIcon from '@material-ui/icons/Publish';
+import { NavigationBar } from 'navigationBar/NavigationBar';
 
 const useEditProjectViewNavbarStyles = makeStyles(theme => ({
-  toolbar: {
-    display: 'grid',
-    gridTemplateRows: '1fr',
-    gridTemplateColumns: '1fr max-content 1fr'
-  },
-  left: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  link: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   center: {
     display: 'flex',
     flexDirection: 'row',
@@ -78,11 +50,10 @@ const useEditProjectViewNavbarStyles = makeStyles(theme => ({
   title: {
     marginRight: theme.spacing(2)
   },
-  right: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end'
+  onDarkBackground: {
+    '&:hover': {
+      backgroundColor: emphasize(theme.palette.secondary.main, 0.08)
+    }
   }
 }));
 
@@ -145,36 +116,23 @@ export const EditProjectNavbar = ({ project }: EditProjectNavbarProps) => {
   }
   return (
     <>
-      <AppBar position="static">
-        <Toolbar className={classes.toolbar}>
-          <div className={classes.left}>
-            <Tooltip title="Back to the homepage">
-              <Link component={RouterLink} to="/" className={classes.link} color="inherit">
-                <SiriusIcon fontSize="large" />
-              </Link>
-            </Tooltip>
-          </div>
-
-          <div className={classes.center}>
-            <Typography variant="h6" noWrap className={classes.title}>
-              {project?.name}
-            </Typography>
-            <IconButton
-              edge="start"
-              aria-label="more"
-              aria-controls="more-menu"
-              aria-haspopup="true"
-              onClick={onMoreClick}
-              color="inherit">
-              <MoreHorizIcon />
-            </IconButton>
-          </div>
-
-          <div className={classes.right}>
-            <Help />
-          </div>
-        </Toolbar>
-      </AppBar>
+      <NavigationBar>
+        <div className={classes.center}>
+          <Typography variant="h6" noWrap className={classes.title}>
+            {project?.name}
+          </Typography>
+          <IconButton
+            className={classes.onDarkBackground}
+            edge="start"
+            aria-label="more"
+            aria-controls="more-menu"
+            aria-haspopup="true"
+            onClick={onMoreClick}
+            color="inherit">
+            <MoreVertIcon />
+          </IconButton>
+        </div>
+      </NavigationBar>
 
       <Menu
         open={viewState === CONTEXTUAL_MENU_DISPLAYED__STATE}

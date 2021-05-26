@@ -10,14 +10,26 @@
  * Contributors:
  *     Obeo - initial API and implementation
  *******************************************************************************/
-import { Link } from '@material-ui/core';
+import { Link, IconButton } from '@material-ui/core';
+import { makeStyles, emphasize } from '@material-ui/core/styles';
 import HelpIcon from '@material-ui/icons/Help';
 import React from 'react';
 
+const useHelpStyle = makeStyles(theme => ({
+  onDarkBackground: {
+    '&:hover': {
+      backgroundColor: emphasize(theme.palette.secondary.main, 0.08)
+    }
+  }
+}));
+
 export const Help = () => {
+  const classes = useHelpStyle();
   return (
     <Link href="https://www.eclipse.org/sirius" rel="noopener noreferrer" target="_blank" color="inherit">
-      <HelpIcon />
+      <IconButton className={classes.onDarkBackground} color="inherit">
+        <HelpIcon />
+      </IconButton>
     </Link>
   );
 };
